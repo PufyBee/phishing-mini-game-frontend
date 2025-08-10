@@ -1,61 +1,18 @@
-// pages/academy/setup.js
-import Link from 'next/link'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
+import Link from "next/link";
 
-const levels = [
-    { name: 'Easy', emails: 5, time: 60, color: 'green' },
-    { name: 'Medium', emails: 10, time: 45, color: 'yellow' },
-    { name: 'Hard', emails: 15, time: 30, color: 'red' },
-]
-
-export default function AcademySetup() {
-    const [selected, setSelected] = useState(null)
-    const router = useRouter()
-
+export default function Setup() {
     return (
-        <div className="min-h-screen p-8 bg-gray-50">
-            <button
-                className="mb-4 text-purple-600 hover:underline"
-                onClick={() => router.push('/')}
-            >
-                ← Back
-            </button>
-            <h2 className="text-3xl font-bold mb-6">Phish Academy Challenge</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {levels.map((lvl) => {
-                    const active = selected === lvl.name
-                    return (
-                        <div
-                            key={lvl.name}
-                            onClick={() => setSelected(lvl.name)}
-                            className={`
-                p-6 border-2 rounded-lg cursor-pointer
-                ${active ? `border-${lvl.color}-600 bg-${lvl.color}-50` : 'border-gray-300 bg-white'}
-                hover:border-${lvl.color}-500
-                transition
-              `}
-                        >
-                            <h3 className="text-xl font-semibold">{lvl.name}</h3>
-                            <p className="mt-2 text-gray-600">
-                                {lvl.emails} emails · {lvl.time}s
-                            </p>
-                        </div>
-                    )
-                })}
+        <main className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="max-w-xl w-full p-6 space-y-6">
+                <h1 className="text-2xl font-extrabold">Phish Academy</h1>
+                <p className="text-gray-700">Pick a difficulty to start.</p>
+                <div className="grid gap-3">
+                    <Link href="/academy/play?level=easy" className="px-5 py-3 rounded-xl bg-green-600 text-white">Easy</Link>
+                    <Link href="/academy/play?level=medium" className="px-5 py-3 rounded-xl bg-yellow-600 text-white">Medium</Link>
+                    <Link href="/academy/play?level=hard" className="px-5 py-3 rounded-xl bg-red-600 text-white">Hard</Link>
+                </div>
+                <Link href="/" className="text-sm text-gray-600">← Back home</Link>
             </div>
-            <Link
-                href={selected ? `/academy/play?level=${selected.toLowerCase()}` : '#'}
-                className={`
-          mt-8 px-6 py-3 font-semibold rounded-lg shadow
-          ${selected
-                        ? 'bg-purple-600 text-white hover:bg-purple-700'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'}
-          transition
-        `}
-            >
-                Start Challenge
-            </Link>
-        </div>
-    )
+        </main>
+    );
 }
